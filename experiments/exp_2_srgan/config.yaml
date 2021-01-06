@@ -1,52 +1,67 @@
-title: 'exp_1'
 train:
-  gpu: 1
+  title: 'exp1_srgan_run1'
+  isTrain: True
   resume: False
-  hyperparameters:
-    lr: 0.001
+  gpu: 1
+  gpu_id: '0'
+  # hyperparameters
+  hp:
+    input_nc: 3
+    output_nc: 3
+    ngf: 64
+    ndf: 64
+    net_g: 'unet_256'
+    net_d: 'pixel'
+    direction: 'AtoB'
+    # only used if net_d == 'n_layers'
+    d_nlayers: 3
+    norm: 'none'
+    use_dropout: True
+    init_type: 'normal'
+    init_gain: 0.02
+    # options: [vanilla | lsgan | wgangp]
+    gan_mode: 'lsgan'
+    lr: 0.0002
     lr_decay: 0.5
-    lr_decay_epoch: 10
-    total_epochs: 100
+    n_epochs_decay: 100
+    # options: [linear | step | plateau | cosine]
+    lr_policy: 'linear'
+    # momentum for 'Adam'
+    beta1: 0.5
+    lambda_L1: 100.0
+    load_iter: 0
+    epoch: 'latest'
+    n_epochs: 100
+    epoch_count: 1
     momentum: 1
     weight_decay: 1
+    verbose: 'store_true'
   checkpoints:
-    loc: 'runs/checkpoints'
+    loc: '../runs/checkpoints'
     ckpt_fname: 'checkpoint.pth.tar'
     best_ckpt_fname: 'best_checkpoint.pth.tar'
   logs: 
     loc: 'logs/train'
     log_interval: 10
-test:
-  gpu: 1
-  hyperparameters:
-    lr: 0.001
-    lr_decay: 0.5
-    lr_decay_epoch: 10
-    total_epochs: 100
-    momentum: 1
-    weight_decay: 1
-evaluate:
-  gpu: 1   
-  hyperparameters:
-    lr: 0.001
-    lr_decay: 0.5
-    lr_decay_epoch: 10
-    total_epochs: 100
-    momentum: 1
-    weight_decay: 1
-data:
-  num_classes: 10
-  batch_size: 200
-  valid_size: 0.1
-  random_seed: 0.4
-  shuffle: False
-  # If using CUDA, turn pin_memory=True and workers=1
-  pin_memory: True
-  workers: 1
-  augment: False
-  show_sample: True
-gpu: 1
+  data:
+    preprocess: 'resize_and_crop'
+    num_classes: 10
+    batch_size: 1
+    valid_size: 0.1
+    random_seed: 0.4
+    shuffle: False
+    # If using CUDA, turn pin_memory=True and workers=1
+    pin_memory: True
+    workers: 0
+    augment: False
+    show_sample: True
 distributed: False
 world_size: 1
 dist_backend: tcp
 dist_url: 'tcp://192.168.19.162:10443'
+display_freq: 400
+print_freq: 100
+save_latest_freq: 5000
+save_epoch_freq: 1
+save_by_iter: False
+update_html_freq: 1000
