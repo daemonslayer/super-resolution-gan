@@ -72,7 +72,7 @@ class SRDataset(Dataset):
             print(self.images[i], img.width, img.height)
         lr_img, hr_img = self.transform(img)
 
-        return lr_img, hr_img
+        return {'LR': lr_img, 'HR': hr_img}
 
     def __len__(self):
         """
