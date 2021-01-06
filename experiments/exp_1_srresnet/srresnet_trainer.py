@@ -5,7 +5,7 @@ from base_trainer import BaseTrainer
 from utils import *
 
 class SRResnetTrainer(BaseTrainer):
-	@staticmethod
+    @staticmethod
     def modify_commandline_options(parser, is_train=True):
         """Add new dataset-specific options, and rewrite default values for existing options.
         Parameters:

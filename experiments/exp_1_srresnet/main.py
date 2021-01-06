@@ -16,7 +16,7 @@ from mapper import mapper
 from dataloader import SRDataset 
 from srresnet_trainer import SRResnetTrainer
 
-summary_writer = SummaryWriter('../runs/exp2_remote_run2')
+summary_writer = SummaryWriter('../runs/exp1_remote_run1')
 
 def str2bool(v):
     if v.lower() in ('yes', 'true', 't', 'y', '1'):
