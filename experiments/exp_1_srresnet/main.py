@@ -14,7 +14,7 @@ from tensorboardX import SummaryWriter
 
 from mapper import mapper
 from dataloader import SRDataset 
-from pix2pix_trainer import Pix2PixTrainer
+from srresnet_trainer import SRResnetTrainer
 
 summary_writer = SummaryWriter('../runs/exp2_remote_run2')
 
@@ -34,7 +34,7 @@ def main(args):
         config = mapper(**config_dict)
     
     # print('GPU Ids: {}'.format(config.train.gpu_id.split(',')))
-    trainer = Pix2PixTrainer(config.train)
+    trainer = SRResnetTrainer(config.train)
     trainer.setup(config.train)
     total_iters = 0
     log_name = os.path.join(config.train.checkpoints.loc, config.train.title, 'loss_log.txt')
