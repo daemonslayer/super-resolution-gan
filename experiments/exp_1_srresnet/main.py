@@ -13,7 +13,7 @@ from torchvision.utils import make_grid
 from tensorboardX import SummaryWriter
 
 from mapper import mapper
-from dataloader import ImageLoader2D 
+from dataloader import SRDataset 
 from pix2pix_trainer import Pix2PixTrainer
 
 summary_writer = SummaryWriter('../runs/exp2_remote_run2')
@@ -39,14 +39,21 @@ def main(args):
     total_iters = 0
     log_name = os.path.join(config.train.checkpoints.loc, config.train.title, 'loss_log.txt')
 
-    train_data = ImageLoader2D(args=config.train.data, train=True,
-                                transform=transforms.Compose([transforms.ToTensor()]))
+    # train_data = SRDataset(args=config.train.data, train=True,
+    #                             transform=transforms.Compose([transforms.ToTensor()]))
 
-    test_data  = ImageLoader2D(args=config.train.data, train=False,
-                                transform=transforms.Compose([transforms.ToTensor()]))
+    # test_data  = SRDataset(args=config.train.data, train=False,
+    #                             transform=transforms.Compose([transforms.ToTensor()]))
 
-    val_data   = ImageLoader2D(args=config.train.data, train=False,
-                                transform=transforms.Compose([transforms.ToTensor()]))
+    # val_data   = SRDataset(args=config.train.data, train=False,
+    #                             transform=transforms.Compose([transforms.ToTensor()]))
+
+    train_data = SRDataset('./', 
+                    split='train', 
+                    crop_size=96, 
+                    scaling_factor=4, 
+                    lr_img_type='imagenet-norm',
+                    hr_img_type='[-1, 1]')
     
     train_loader = torch.utils.data.DataLoader(
         train_data, batch_size=config.train.data.batch_size, shuffle=config.train.data.shuffle,
